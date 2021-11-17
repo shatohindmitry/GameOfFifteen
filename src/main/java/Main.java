@@ -17,7 +17,6 @@ public class Main extends JFrame {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout());
         window.setLocationRelativeTo(null);
-
         window.setResizable(false);
         Game game = new Game(COLS, ROWS, TileSize);
         window.add(game);
