@@ -10,7 +10,6 @@ public class Game extends JComponent {
     int[] selectedTail = new int[3];
     boolean win = false;
     int[] aForSort = new int[cols * rows];
-    //int[] aForSort2 = new int[];
     boolean test = false;
     int[] eArray;
 
