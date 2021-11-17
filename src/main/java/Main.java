@@ -6,10 +6,8 @@ public class Main extends JFrame {
     private static int COLS = 4;
     private static int ROWS = 4;
     private static int TileSize = 64;
-    private JTextArea[][] grids;
 
     public Main() {
-        grids = new JTextArea[ROWS][COLS];
         init();
     }
 
@@ -27,7 +25,7 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        Main m = new Main();
+       new Main();
     }
 
 }

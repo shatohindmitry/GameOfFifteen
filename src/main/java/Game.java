@@ -12,6 +12,7 @@ public class Game extends JComponent {
     int[] aForSort = new int[cols * rows];
     boolean test = false;
     int[] eArray;
+    Image key;
 
     public Game(int cols, int rows, int tileSize) {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
@@ -19,6 +20,13 @@ public class Game extends JComponent {
         Game.rows = rows;
         Game.tileSize = tileSize;
         this.field = new int[cols][rows];
+
+        try {
+            ImageIcon img = new ImageIcon(this.getClass().getResource("/key.png"));
+            key = img.getImage();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         initGame();
     }
@@ -53,7 +61,7 @@ public class Game extends JComponent {
             }
         } else {
             //test
-            for (i = 1; i < cols*rows; i++) {
+            for (i = 1; i < cols * rows; i++) {
                 a[i - 1] = i;
             }
             aForSort = Arrays.copyOf(a, a.length);
@@ -80,7 +88,7 @@ public class Game extends JComponent {
             if (!win) {
                 checkTail(mouseEvent.getX(), mouseEvent.getY());
                 repaint();
-            }else {
+            } else {
                 win = false;
                 initGame();
             }
@@ -93,19 +101,19 @@ public class Game extends JComponent {
         checkWin();
     }
 
-    private void getEArray(){
+    private void getEArray() {
 
-        eArray = new int[cols*rows];
+        eArray = new int[cols * rows];
 
-        for (int i=0; i<cols*rows; i++){
-            eArray[i] = i+1;
+        for (int i = 0; i < cols * rows; i++) {
+            eArray[i] = i + 1;
         }
-        eArray[eArray.length-1] = 0;
+        eArray[eArray.length - 1] = 0;
     }
 
     private void checkWin() {
-        int[] testArray = new int[cols*rows];
-        int k=0;
+        int[] testArray = new int[cols * rows];
+        int k = 0;
         for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
                 testArray[k] = field[i][j];
@@ -113,7 +121,7 @@ public class Game extends JComponent {
             }
         }
 
-        if(Arrays.equals(testArray,eArray)){
+        if (Arrays.equals(testArray, eArray)) {
             win = true;
         }
     }
@@ -164,7 +172,6 @@ public class Game extends JComponent {
         selectedTail[2] = 0;
     }
 
-
     private void getSelectedTail(int x, int y) {
 
         double dx = (((double) x) / tileSize) - Math.floor(((double) x) / tileSize);
@@ -184,7 +191,7 @@ public class Game extends JComponent {
         Graphics2D g2 = (Graphics2D) graphics;
         g2.setFont(new Font("default", Font.BOLD, 16));
 
-        if(!win) {
+        if (!win) {
             int z = 1;
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < cols; x++) {
@@ -195,7 +202,7 @@ public class Game extends JComponent {
                     }
                 }
             }
-        }else {
+        } else {
             int z = 1;
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < cols; x++) {
@@ -208,7 +215,7 @@ public class Game extends JComponent {
             }
             g2.setFont(new Font("default", Font.BOLD, 50));
             g2.setColor(Color.RED);
-            g2.drawString("WIN", (rows * tileSize)/2 - 48 , (cols * tileSize)/2);
+            g2.drawString("WIN", (rows * tileSize) / 2 - 48, (cols * tileSize) / 2);
         }
     }
 
@@ -217,14 +224,6 @@ public class Game extends JComponent {
     }
 
     public Image getImg() {
-
-        try {
-            ImageIcon img = new ImageIcon(this.getClass().getResource("/key.png"));
-            Image key = img.getImage();
-            return key;
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
-        }
+        return key;
     }
 }
