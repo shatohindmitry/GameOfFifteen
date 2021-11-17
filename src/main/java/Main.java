@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class Main extends JFrame {
 
-    private static int COLS = 4;
-    private static int ROWS = COLS;
+    private static int COLS = 5;
+    private static int ROWS = 5;
     private static int TileSize = 64;
     private JTextArea[][] grids;
 

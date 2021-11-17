@@ -10,7 +10,9 @@ public class Game extends JComponent {
     int[] selectedTail = new int[3];
     boolean win = false;
     int[] aForSort = new int[cols * rows];
-    boolean test = true;
+    //int[] aForSort2 = new int[];
+    boolean test = false;
+    int[] eArray;
 
     public Game(int cols, int rows, int tileSize) {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
@@ -18,6 +20,7 @@ public class Game extends JComponent {
         Game.rows = rows;
         Game.tileSize = tileSize;
         this.field = new int[cols][rows];
+
         initGame();
     }
 
@@ -29,6 +32,8 @@ public class Game extends JComponent {
 
         int[] a = new int[cols * rows];
         int i = 0;
+
+        getEArray();
 
         if (!test) {
 
@@ -49,7 +54,7 @@ public class Game extends JComponent {
             }
         } else {
             //test
-            for (i = 1; i < 16; i++) {
+            for (i = 1; i < cols*rows; i++) {
                 a[i - 1] = i;
             }
             aForSort = Arrays.copyOf(a, a.length);
@@ -86,20 +91,28 @@ public class Game extends JComponent {
         checkWin();
     }
 
+    private void getEArray(){
+
+        eArray = new int[cols*rows];
+
+        for (int i=0; i<cols*rows; i++){
+            eArray[i] = i+1;
+        }
+        eArray[eArray.length-1] = 0;
+    }
+
     private void checkWin() {
-        int k = 1;
+        int[] testArray = new int[cols*rows];
+        int k=0;
         for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
-                if (cols - 1 == i && rows - 1 == j) {
-                    k = 0;
-                }
-                if (field[i][j] == k) {
-                    win = true;
-                } else {
-                    win = false;
-                }
+                testArray[k] = field[i][j];
                 k++;
             }
+        }
+
+        if(Arrays.equals(testArray,eArray)){
+            win = true;
         }
     }
 
