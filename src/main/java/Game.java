@@ -80,6 +80,9 @@ public class Game extends JComponent {
             if (!win) {
                 checkTail(mouseEvent.getX(), mouseEvent.getY());
                 repaint();
+            }else {
+                win = false;
+                initGame();
             }
         }
     }
