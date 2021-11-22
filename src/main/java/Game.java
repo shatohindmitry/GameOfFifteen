@@ -3,23 +3,26 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
-public class Game extends JComponent {
+public class Game extends JPanel {
 
     private static int cols, rows, tileSize;
     int[][] field;
     int[] selectedTail = new int[3];
     boolean win = false;
     int[] aForSort = new int[cols * rows];
-    boolean test = false;
+    static boolean test = false;
     int[] eArray;
     Image key;
+    int score;
+    JLabel label;
 
     public Game(int cols, int rows, int tileSize) {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-        Game.cols = cols;
-        Game.rows = rows;
-        Game.tileSize = tileSize;
+        this.cols = cols;
+        this.rows = rows;
+        this.tileSize = tileSize;
         this.field = new int[cols][rows];
+        this.label = Main.label;
 
         try {
             ImageIcon img = new ImageIcon(this.getClass().getResource("/key.png"));
@@ -41,6 +44,7 @@ public class Game extends JComponent {
         int i = 0;
 
         getEArray();
+        score = 0;
 
         if (!test) {
 
@@ -85,6 +89,7 @@ public class Game extends JComponent {
     protected void processMouseEvent(MouseEvent mouseEvent) {
         super.processMouseEvent(mouseEvent);
         if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+
             if (!win) {
                 checkTail(mouseEvent.getX(), mouseEvent.getY());
                 repaint();
@@ -138,6 +143,7 @@ public class Game extends JComponent {
                 if (field[testX - 1][testY] == 0) {
                     field[testX - 1][testY] = selectedTail[2];
                     field[testX][testY] = 0;
+                    score++;
                 }
             } catch (Exception e) {
             }
@@ -146,6 +152,7 @@ public class Game extends JComponent {
                 if (field[testX + 1][testY] == 0) {
                     field[testX + 1][testY] = selectedTail[2];
                     field[testX][testY] = 0;
+                    score++;
                 }
 
             } catch (Exception e) {
@@ -155,6 +162,7 @@ public class Game extends JComponent {
                 if (field[testX][testY - 1] == 0) {
                     field[testX][testY - 1] = selectedTail[2];
                     field[testX][testY] = 0;
+                    score++;
                 }
 
             } catch (Exception e) {
@@ -164,6 +172,7 @@ public class Game extends JComponent {
                 if (field[testX][testY + 1] == 0) {
                     field[testX][testY + 1] = selectedTail[2];
                     field[testX][testY] = 0;
+                    score++;
                 }
 
             } catch (Exception e) {
@@ -187,7 +196,7 @@ public class Game extends JComponent {
 
     @Override
     protected void paintComponent(Graphics graphics) {
-
+        super.paintComponent(graphics);
         Graphics2D g2 = (Graphics2D) graphics;
         g2.setFont(new Font("default", Font.BOLD, 16));
 
@@ -217,6 +226,7 @@ public class Game extends JComponent {
             g2.setColor(Color.RED);
             g2.drawString("WIN", (rows * tileSize) / 2 - 48, (cols * tileSize) / 2);
         }
+        label.setText("score:" + score);
     }
 
     private int rnd(int max) {
